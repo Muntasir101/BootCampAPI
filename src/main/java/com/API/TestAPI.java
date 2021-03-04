@@ -37,53 +37,53 @@ public class TestAPI {
         System.out.println("Status Code : " + response.getStatusCode());
     }
 
-//    @Test
-//    public void testGetSpecificEmployee() {
-//        Response response = given().when().get(employeeWithID + 19240).then()
-//                .extract().response();
-//        System.out.println("Response is : " + response.asString());
-//        JsonPath x = new JsonPath(response.asString());
-//        System.out.println("Response : " + response.asString());
-//        System.out.println("Status Code : " + response.getStatusCode());
-//    }
+    @Test
+    public void testGetSpecificEmployee() {
+        Response response = given().when().get(employeeWithID + 1).then()
+                .extract().response();
+        System.out.println("Response is : " + response.asString());
+        JsonPath x = new JsonPath(response.asString());
+        System.out.println("Response : " + response.asString());
+        System.out.println("Status Code : " + response.getStatusCode());
+    }
+
+    @Test
+    public void testPutCalls() {
+        String requestBody = "{\r\n" +
+                " \"name\":\"Muntasir\",\r\n" +
+                " \"salary\":\"786\",\r\n" +
+                " \"age\":\"25\"\r\n" +
+                "}";
+        Response response = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .put(update + 1);
+        System.out.println("Response : " + response.asString());
+        System.out.println("Status Code : " + response.getStatusCode());
+
+    }
 //
-//    @Test
-//    public void testPutCalls() {
-//        String requestBody = "{\r\n" +
-//                " \"name\":\"zan\",\r\n" +
-//                " \"salary\":\"786\",\r\n" +
-//                " \"age\":\"25\"\r\n" +
-//                "}";
-//        Response response = RestAssured.given()
-//                .contentType(ContentType.JSON)
-//                .body(requestBody)
-//                .put(update + 19240);
-//        System.out.println("Response : " + response.asString());
-//        System.out.println("Status Code : " + response.getStatusCode());
+    @Test
+    public void testPostCalls() throws JSONException {
+        JSONObject requestParams = new JSONObject();
+        requestParams.put("name", "mars");
+        requestParams.put("salary", "100000");
+        requestParams.put("age", "22");
+        Response response = given().header("Content-Type", "application/json").
+                body(requestParams.toString()).
+                when().post(create).
+                then().statusCode(200).extract().response();
+        System.out.println(requestParams.toString());
+        System.out.println("Response : " + response.asString());
+        System.out.println("Status Code : " + response.getStatusCode());
+    }
 //
-//    }
-//
-//    @Test
-//    public void testPostCalls() throws JSONException {
-//        JSONObject requestParams = new JSONObject();
-//        requestParams.put("name", "peopleNtech");
-//        requestParams.put("salary", "100000");
-//        requestParams.put("age", "22");
-//        Response response = given().header("Content-Type", "application/json").
-//                body(requestParams.toString()).
-//                when().post(create).
-//                then().statusCode(200).extract().response();
-//        System.out.println(requestParams.toString());
-//        System.out.println("Response : " + response.asString());
-//        System.out.println("Status Code : " + response.getStatusCode());
-//    }
-//
-//    @Test
-//    public void testDeleteCalls() {
-//        Response response = RestAssured.given()
-//                .contentType(ContentType.JSON)
-//                .delete("/delete/19397");
-//        System.out.println("Response : " + response.asString());
-//        System.out.println("Status Code : " + response.getStatusCode());
-//    }
+    @Test
+    public void testDeleteCalls() {
+        Response response = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .delete("/delete/19397");
+        System.out.println("Response : " + response.asString());
+        System.out.println("Status Code : " + response.getStatusCode());
+    }
 }
